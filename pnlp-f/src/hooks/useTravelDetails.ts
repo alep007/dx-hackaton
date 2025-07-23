@@ -14,7 +14,7 @@ interface TravelDetails {
 
 // Real fetch function for travel details
 async function fetchTravelDetails(travelId: string): Promise<TravelDetails[]> {
-  const response = await fetch(`http://localhost:3001/quotes/${travelId}`);
+  const response = await fetch(`https://dx-hackaton.onrender.com/trips/quotes/${travelId}`);
 
   if (!response.ok) {
     throw new Error(`Failed to fetch travel details: ${response.statusText}`);

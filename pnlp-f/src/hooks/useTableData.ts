@@ -2,7 +2,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 // Real API fetch function
 async function fetchTableData() {
-  const response = await fetch('http://localhost:3001/trips');
+  const response = await fetch('https://dx-hackaton.onrender.com/trips');
   if (!response.ok) {
     throw new Error('Failed to fetch trips data');
   }
