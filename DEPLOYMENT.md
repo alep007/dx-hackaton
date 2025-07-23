@@ -6,7 +6,7 @@ This guide will help you deploy both the backend (NestJS) and frontend (Next.js)
 
 1. **GitHub Repository**: Make sure both projects are in a GitHub repository
 2. **MongoDB Atlas Account**: For the database (free tier available)
-3. **Railway Account**: For backend deployment (free tier available)
+3. **Render Account**: For backend deployment (free tier available)
 4. **Vercel Account**: For frontend deployment (free tier available)
 
 ## Step 1: Set up MongoDB Atlas
@@ -16,17 +16,23 @@ This guide will help you deploy both the backend (NestJS) and frontend (Next.js)
 3. Create a database user with read/write permissions
 4. Get your connection string (it will look like: `mongodb+srv://username:password@cluster.mongodb.net/travel-app`)
 
-## Step 2: Deploy Backend (Railway)
+## Step 2: Deploy Backend (Render)
 
-1. Go to [Railway](https://railway.app) and sign up with GitHub
-2. Click "New Project" → "Deploy from GitHub repo"
-3. Select your repository and the `pnlp-b` directory
-4. Railway will automatically detect it's a Node.js app
+1. Go to [Render](https://render.com) and sign up with GitHub
+2. Click "New" → "Web Service"
+3. Connect your GitHub repository
+4. Configure the service:
+   - **Name**: `pnlp-backend` (or any name you prefer)
+   - **Environment**: `Node`
+   - **Build Command**: `npm install && npm run build`
+   - **Start Command**: `npm run start:prod`
+   - **Plan**: Free
 5. Add environment variables:
    - `MONGODB_URI`: Your MongoDB Atlas connection string
-   - `PORT`: 3001 (or leave empty for Railway to assign)
+   - `PORT`: 3001
    - `FRONTEND_URL`: Your frontend URL (we'll update this after frontend deployment)
-6. Deploy and get your backend URL (e.g., `https://your-app.railway.app`)
+6. Click "Create Web Service" and wait for deployment
+7. Get your backend URL (e.g., `https://your-app.onrender.com`)
 
 ## Step 3: Deploy Frontend (Vercel)
 
@@ -41,9 +47,10 @@ This guide will help you deploy both the backend (NestJS) and frontend (Next.js)
 ## Step 4: Update CORS Configuration
 
 After getting your frontend URL, update the backend environment variable:
-1. Go back to Railway dashboard
-2. Update the `FRONTEND_URL` environment variable with your Vercel frontend URL
-3. Redeploy the backend
+1. Go back to Render dashboard
+2. Go to your web service → Environment
+3. Update the `FRONTEND_URL` environment variable with your Vercel frontend URL
+4. Redeploy the service
 
 ## Step 5: Test Your Deployment
 
@@ -54,7 +61,7 @@ After getting your frontend URL, update the backend environment variable:
 ## Alternative Deployment Options
 
 ### Backend Alternatives:
-- **Render**: Similar to Railway, good free tier
+- **Railway**: Similar to Render, good free tier
 - **Heroku**: More established but requires credit card for free tier
 - **DigitalOcean App Platform**: Good performance, paid
 
@@ -65,7 +72,7 @@ After getting your frontend URL, update the backend environment variable:
 
 ## Environment Variables Reference
 
-### Backend (Railway)
+### Backend (Render)
 ```env
 MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/travel-app
 PORT=3001
@@ -74,7 +81,7 @@ FRONTEND_URL=https://your-frontend.vercel.app
 
 ### Frontend (Vercel)
 ```env
-NEXT_PUBLIC_API_URL=https://your-backend.railway.app
+NEXT_PUBLIC_API_URL=https://your-backend.onrender.com
 ```
 
 ## Troubleshooting
@@ -86,14 +93,14 @@ NEXT_PUBLIC_API_URL=https://your-backend.railway.app
 4. **Build Failures**: Check that all dependencies are in `package.json`
 
 ### Debugging:
-- Check Railway logs for backend issues
+- Check Render logs for backend issues
 - Check Vercel build logs for frontend issues
 - Use browser dev tools to check network requests
 - Verify environment variables are set correctly
 
 ## Cost Estimation
 
-- **Railway**: Free tier includes 500 hours/month
+- **Render**: Free tier includes 750 hours/month
 - **Vercel**: Free tier includes unlimited deployments
 - **MongoDB Atlas**: Free tier includes 512MB storage
 - **Total**: $0/month for small to medium usage 
