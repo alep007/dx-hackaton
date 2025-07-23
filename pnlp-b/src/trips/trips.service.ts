@@ -4,6 +4,7 @@ import { Model } from 'mongoose';
 import type { ChangeStream } from 'mongodb';
 import { TripQuote, TripQuoteDocument } from '../schemas/trip-quote.schema';
 import { QuotePrice, QuotePriceDocument } from '../schemas/quote-price.schema';
+import { ChangeStreamDocument, QuotePriceDocument as QuotePriceDoc } from '../types';
 import { WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
 import { Server } from 'socket.io';
 
@@ -50,8 +51,8 @@ export class TripsService implements OnModuleInit, OnModuleDestroy {
       // Emit the change to all connected clients
       this.server.emit('tripChange', {
         operationType: change.operationType,
-        documentId: (change as any).documentKey?._id,
-        fullDocument: (change as any).fullDocument,
+        documentId: (change as unknown as ChangeStreamDocument).documentKey?._id,
+        fullDocument: (change as unknown as ChangeStreamDocument).fullDocument,
         timestamp: new Date(),
       });
     });
@@ -66,7 +67,7 @@ export class TripsService implements OnModuleInit, OnModuleDestroy {
     try {
       const quotePrices = await this.quotePriceModel.find({ tripId }).exec();
       const quotes = quotePrices.length;
-      const bestOffer = quotes > 0 ? Math.min(...quotePrices.map(qp => (qp as any).amount || Infinity)) : null;
+      const bestOffer = quotes > 0 ? Math.min(...quotePrices.map(qp => (qp as unknown as QuotePriceDoc).amount || Infinity)) : null;
       
       return { bestOffer, quotes };
     } catch (error) {

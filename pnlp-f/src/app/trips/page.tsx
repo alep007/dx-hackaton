@@ -38,6 +38,7 @@ import { useRealTimeData } from '../../hooks/useRealTimeData';
 import { useTravelDetails } from '../../hooks/useTravelDetails';
 import { TravelDetailsComponent } from '../../components/TravelDetails';
 import { columns } from './columns';
+import { TripData } from '../../types';
 
 const queryClient = new QueryClient();
 
@@ -56,10 +57,10 @@ function TableContent({
   switchToWebSocket,
   switchToHybrid,
 }: {
-  data: any[];
+  data: TripData[];
   isLoading: boolean;
   selectedRowId: string | null;
-  onRowSelect: (rowData: any) => void;
+  onRowSelect: (rowData: TripData) => void;
   isFetching?: boolean;
   refresh?: () => void;
   pausePolling?: () => void;
@@ -95,7 +96,7 @@ function TableContent({
     manualPagination: false,
   });
 
-  const handleRowClick = (rowData: any) => {
+  const handleRowClick = (rowData: TripData) => {
     onRowSelect(rowData);
   };
 
@@ -301,7 +302,7 @@ function TablePageContent() {
     mode: 'polling',
     pollingInterval: 3000, // Update every 3 seconds
   });
-  const [selectedRowData, setSelectedRowData] = React.useState<any>(null);
+  const [selectedRowData, setSelectedRowData] = React.useState<TripData | null>(null);
   
   // Use the enhanced useTravelDetails hook with real-time capabilities
   const { 
@@ -339,7 +340,7 @@ function TablePageContent() {
     }
   }, [selectedRowData?._id, getTravelDetails, clearDetails]);
 
-  const handleRowSelect = (rowData: any) => {
+  const handleRowSelect = (rowData: TripData) => {
     setSelectedRowData(rowData);
   };
 
@@ -353,7 +354,7 @@ function TablePageContent() {
       <TableContent
         data={data || []}
         isLoading={isLoading}
-        selectedRowId={selectedRowData?.id}
+        selectedRowId={selectedRowData?._id || null}
         onRowSelect={handleRowSelect}
         isFetching={isFetching}
         refresh={refresh}
@@ -369,7 +370,7 @@ function TablePageContent() {
       {/* Modal rendered outside the table layout */}
       <TravelDetailsComponent
         data={travelDetails}
-        rowData={selectedRowData}
+        rowData={selectedRowData || undefined}
         onClose={handleCloseDetails}
         open={!!selectedRowData?._id}
         isConnected={detailsConnected}

@@ -30,10 +30,11 @@ import {
 import { TravelDetails } from '../hooks/useTravelDetails';
 import { WhatsAppLink } from '../utils/WhatsappLink';
 import { RealTimeTestUtils } from '../utils/RealTimeTestUtils';
+import { TripData } from '../types';
 
 interface TravelDetailsProps {
   data?: TravelDetails[] | null;
-  rowData?: any; // Add the whole row data
+  rowData?: TripData; // Add the whole row data
   onClose: () => void;
   open: boolean;
   // Real-time props
@@ -44,7 +45,7 @@ interface TravelDetailsProps {
   relevantChangesCount?: number;
 }
 
-const Transition = forwardRef(function Transition(props: any, ref: React.Ref<unknown>) {
+const Transition = forwardRef(function Transition(props: React.ComponentProps<typeof Slide>, ref: React.Ref<unknown>) {
   return <Slide direction='left' ref={ref} {...props} />;
 });
 
@@ -76,7 +77,7 @@ export function TravelDetailsComponent({
   // Helper function to safely access conversation data
   const getConversationId = (conversationData: unknown) => {
     if (conversationData && typeof conversationData === 'object' && 'id' in conversationData) {
-      return (conversationData as any).id;
+      return (conversationData as { id: string }).id;
     }
     return null;
   };
@@ -208,12 +209,12 @@ export function TravelDetailsComponent({
                   Fecha de carga
                 </Typography>
                 <Typography variant='body1' fontWeight='medium'>
-                  {new Date(rowData?.createdAt).toLocaleDateString('es-ES', {
+                  {rowData?.createdAt ? new Date(rowData.createdAt).toLocaleDateString('es-ES', {
                     day: '2-digit',
                     month: '2-digit',
                     year: 'numeric',
                     timeZone: 'America/La_Paz',
-                  })}
+                  }) : 'N/A'}
                 </Typography>
               </Box>
             </Box>
@@ -238,12 +239,12 @@ export function TravelDetailsComponent({
                   Fecha de entrega
                 </Typography>
                 <Typography variant='body1' fontWeight='medium'>
-                  {new Date(rowData?.deliveryDate).toLocaleDateString('es-ES', {
+                  {rowData?.deliveryDate ? new Date(rowData.deliveryDate).toLocaleDateString('es-ES', {
                     day: '2-digit',
                     month: '2-digit',
                     year: 'numeric',
                     timeZone: 'America/La_Paz',
-                  })}
+                  }) : 'N/A'}
                 </Typography>
               </Box>
             </Box>
@@ -423,7 +424,7 @@ export function TravelDetailsComponent({
                     <WhatsAppLink
                       countryCode='591'
                       //@ts-ignore
-                      phone={extractPhoneFromConversationId(oferta?.conversationData?.id as any)}
+                      phone={extractPhoneFromConversationId(oferta?.conversationData?.id)}
                       onlyIcon={false}
                     />
                   </Box>

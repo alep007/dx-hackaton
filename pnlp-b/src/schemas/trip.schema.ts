@@ -33,7 +33,7 @@ export class Trip {
   tags: string[];
 
   @Prop({ type: Object })
-  metadata: Record<string, any>;
+  metadata: Record<string, unknown>;
 }
 
 export const TripSchema = SchemaFactory.createForClass(Trip); 

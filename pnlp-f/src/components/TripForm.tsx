@@ -17,6 +17,7 @@ import {
 } from '@mui/material';
 import { TripApiService } from '../services/tripApi';
 import { Trip } from '../hooks/useTripChanges';
+import { FormFieldValue } from '../types';
 
 interface TripFormProps {
   onTripCreated?: (trip: Trip) => void;
@@ -38,7 +39,9 @@ export const TripForm: React.FC<TripFormProps> = ({ onTripCreated }) => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
 
-  const handleInputChange = (field: string, value: any) => {
+
+
+  const handleInputChange = (field: string, value: FormFieldValue) => {
     setFormData(prev => ({
       ...prev,
       [field]: value

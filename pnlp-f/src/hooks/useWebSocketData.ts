@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
+import { WebSocketMessage } from '../types';
 
 interface WebSocketOptions {
   url?: string;
@@ -21,7 +22,7 @@ export function useWebSocketData(options: WebSocketOptions = {}) {
   const reconnectTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const reconnectAttemptsRef = useRef(0);
   const [isConnected, setIsConnected] = useState(false);
-  const [lastMessage, setLastMessage] = useState<any>(null);
+  const [lastMessage, setLastMessage] = useState<WebSocketMessage | null>(null);
 
   const connect = useCallback(() => {
     if (!enabled || wsRef.current?.readyState === WebSocket.OPEN) return;
@@ -87,7 +88,9 @@ export function useWebSocketData(options: WebSocketOptions = {}) {
     reconnectAttemptsRef.current = 0;
   }, []);
 
-  const sendMessage = useCallback((message: any) => {
+
+
+  const sendMessage = useCallback((message: WebSocketMessage) => {
     if (wsRef.current?.readyState === WebSocket.OPEN) {
       wsRef.current.send(JSON.stringify(message));
     }

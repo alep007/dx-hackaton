@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import type { ChangeStream } from 'mongodb';
 import { QuotePrice, QuotePriceDocument } from '../schemas/quote-price.schema';
+import { ChangeStreamDocument } from '../types';
 import { WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
 import { Server } from 'socket.io';
 
@@ -47,8 +48,8 @@ export class QuotePricesService implements OnModuleInit, OnModuleDestroy {
       // Emit the change to all connected clients
       this.server.emit('quotePriceChange', {
         operationType: change.operationType,
-        documentId: (change as any).documentKey?._id,
-        fullDocument: (change as any).fullDocument,
+        documentId: (change as unknown as ChangeStreamDocument).documentKey?._id,
+        fullDocument: (change as unknown as ChangeStreamDocument).fullDocument,
         timestamp: new Date(),
       });
     });

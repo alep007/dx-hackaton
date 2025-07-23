@@ -3,17 +3,19 @@
 import { useEffect, useState, useCallback, useRef } from 'react';
 import { io, Socket } from 'socket.io-client';
 
+import { TripData, QuoteData } from '../types';
+
 export interface TripChangeEvent {
   operationType: 'insert' | 'update' | 'delete' | 'replace' | 'drop' | 'rename' | 'dropDatabase' | 'invalidate';
   documentId: string;
-  fullDocument?: any;
+  fullDocument?: TripData;
   timestamp: Date;
 }
 
 export interface QuotePriceChangeEvent {
   operationType: 'insert' | 'update' | 'delete' | 'replace' | 'drop' | 'rename' | 'dropDatabase' | 'invalidate';
   documentId: string;
-  fullDocument?: any;
+  fullDocument?: QuoteData;
   timestamp: Date;
 }
 

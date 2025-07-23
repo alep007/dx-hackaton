@@ -1,6 +1,7 @@
 import { Controller, Get, Post, Put, Delete, Param, Body, Query } from '@nestjs/common';
 import { QuotePricesService } from './quote-prices.service';
 import { QuotePrice } from '../schemas/quote-price.schema';
+import { CollectionInfo, DatabaseError } from '../types';
 
 @Controller('quotes')
 export class QuotePricesController {
@@ -59,24 +60,24 @@ export class QuotePricesController {
     console.log('🧪 Testing quotePrices database connection...');
     try {
       // Try to get the database connection
-      const db = (this.quotePricesService as any).quotePriceModel.db;
+      const db = (this.quotePricesService as unknown as { quotePriceModel: { db: { databaseName: string; listCollections(): Promise<CollectionInfo[]> } } }).quotePriceModel.db;
       const collections = await db.listCollections();
       
       console.log('✅ Database connection test successful');
       console.log('📊 Database name:', db.databaseName);
-      console.log('📁 Available collections:', collections.map((col: any) => col.name));
+      console.log('📁 Available collections:', collections.map((col: CollectionInfo) => col.name));
       
       return {
         status: 'connected',
         database: db.databaseName,
-        collections: collections.map((col: any) => col.name),
+        collections: collections.map((col: CollectionInfo) => col.name),
         timestamp: new Date().toISOString()
       };
     } catch (error) {
       console.error('❌ Database connection test failed:', error);
       return {
         status: 'error',
-        error: (error as any).message,
+        error: (error as DatabaseError).message,
         timestamp: new Date().toISOString()
       };
     }

@@ -2,11 +2,12 @@
 
 import { useEffect, useState, useCallback } from 'react';
 import { io, Socket } from 'socket.io-client';
+import { TripData } from '../types';
 
 export interface TripChangeEvent {
   operationType: 'insert' | 'update' | 'delete' | 'replace' | 'drop' | 'rename' | 'dropDatabase' | 'invalidate';
   documentId: string;
-  fullDocument?: any;
+  fullDocument?: TripData;
   timestamp: Date;
 }
 
@@ -21,7 +22,7 @@ export interface Trip {
   price?: number;
   participants?: number;
   tags?: string[];
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
   createdAt?: Date;
   updatedAt?: Date;
 }

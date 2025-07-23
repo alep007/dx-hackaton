@@ -1,7 +1,8 @@
 import { Chip, Typography } from "@mui/material";
 import { ColumnDef } from "@tanstack/react-table";
+import { TripData } from "../../types";
 
-export const columns: ColumnDef<any>[] = [
+export const columns: ColumnDef<TripData>[] = [
   {
     header: 'Fecha de carga',
     accessorKey: 'createdAt',

@@ -26,6 +26,8 @@ import {
 } from '@mui/icons-material';
 import { useTripChanges, TripChangeEvent } from '../hooks/useTripChanges';
 
+type ChipColor = 'success' | 'primary' | 'error' | 'warning' | 'info';
+
 const getOperationIcon = (operationType: string) => {
   switch (operationType) {
     case 'insert':
@@ -41,7 +43,7 @@ const getOperationIcon = (operationType: string) => {
   }
 };
 
-const getOperationColor = (operationType: string) => {
+const getOperationColor = (operationType: string): ChipColor => {
   switch (operationType) {
     case 'insert':
       return 'success';
@@ -125,7 +127,7 @@ export const TripChangesMonitor: React.FC = () => {
                   {getOperationIcon(lastChange.operationType)}
                   <Chip
                     label={lastChange.operationType.toUpperCase()}
-                    color={getOperationColor(lastChange.operationType) as any}
+                    color={getOperationColor(lastChange.operationType)}
                     size="small"
                   />
                   <Typography variant="body2" color="text.secondary">
@@ -173,7 +175,7 @@ export const TripChangesMonitor: React.FC = () => {
                         {getOperationIcon(change.operationType)}
                         <Chip
                           label={change.operationType.toUpperCase()}
-                          color={getOperationColor(change.operationType) as any}
+                          color={getOperationColor(change.operationType)}
                           size="small"
                         />
                         <Typography variant="body2" color="text.secondary">
