@@ -3,10 +3,10 @@ import React from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { Inter } from 'next/font/google';
-import "./globals.css";
+import './globals.css';
 
 // Load Inter font
-const inter = Inter({ 
+const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
 });
@@ -31,22 +31,49 @@ const theme = createTheme({
 
 function BaseLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#f5f5f5', display: 'flex', flexDirection: 'column' }}>
-      <header style={{ 
-        position: 'sticky', 
-        top: 0, 
-        zIndex: 10, 
-        width: '100%', 
-        backgroundColor: 'white', 
-        boxShadow: '0 2px 4px rgba(0,0,0,0.1)', 
-        borderBottom: '1px solid #e0e0e0', 
-        padding: '16px 32px', 
-        display: 'flex', 
-        alignItems: 'center' 
+    <div
+      style={{
+        minHeight: '100vh',
+        backgroundColor: '#f5f5f5',
+        display: 'flex',
+        flexDirection: 'column',
       }}>
-        <span style={{ fontSize: '24px', fontWeight: 'bold' }}>FreightHub</span>
+      <header
+        style={{
+          position: 'sticky',
+          top: 0,
+          zIndex: 10,
+          width: '100%',
+          backgroundColor: 'white',
+          boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+          borderBottom: '1px solid #e0e0e0',
+          padding: '16px 32px',
+          display: 'flex',
+          alignItems: 'center',
+        }}>
+        <span style={{ fontSize: '24px', fontWeight: 'bold' }}>
+          Freight
+          <span style={{ 
+            backgroundColor: '#388E3C', 
+            color: 'white', 
+            padding: '2px 6px', 
+            borderRadius: '4px',
+            marginLeft: '2px'
+          }}>
+            Hub
+          </span>
+        </span>
       </header>
-      <main style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '16px', width: '100%' }}>
+      <main
+        style={{
+          flex: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '16px',
+          width: '100%',
+        }}>
         {children}
       </main>
     </div>
@@ -55,10 +82,10 @@ function BaseLayout({ children }: { children: React.ReactNode }) {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="es" className={inter.className}>
+    <html lang='es' className={inter.className}>
       <head>
         <title>FreightHub</title>
-        <meta name="description" content="FreightHub Table Demo" />
+        <meta name='description' content='FreightHub - DX Hackaton' />
       </head>
       <body>
         <ThemeProvider theme={theme}>
