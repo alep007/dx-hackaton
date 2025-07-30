@@ -120,88 +120,132 @@ function TableContent({
         display: 'flex',
         flexDirection: 'column',
       }}>
-      <Box sx={{ mb: 3, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+      <Box sx={{ mb: 4, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
           <TextField
             placeholder='Buscar'
             variant='outlined'
             size='small'
             disabled
-            sx={{ width: 320 }}
+            sx={{
+              width: 320,
+              '& .MuiOutlinedInput-root': {
+                borderRadius: '8px',
+                backgroundColor: '#fff',
+                '& fieldset': {
+                  borderColor: '#e0e0e0',
+                },
+                '&:hover fieldset': {
+                  borderColor: '#bdbdbd',
+                },
+              },
+            }}
             InputProps={{
               startAdornment: (
                 <InputAdornment position='start'>
-                  <SearchIcon color='action' />
+                  <SearchIcon sx={{ color: '#9e9e9e' }} />
                 </InputAdornment>
               ),
             }}
           />
-          
+
           {/* Real-time status indicator */}
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
             {getConnectionStatus && (
               <Chip
                 icon={<WifiIcon />}
                 label={getConnectionStatus().message}
-                color={getConnectionStatus().status === 'connected' ? 'success' : 
-                       getConnectionStatus().status === 'updating' ? 'warning' : 'error'}
-                size="small"
-                variant="outlined"
+                color={
+                  getConnectionStatus().status === 'connected'
+                    ? 'success'
+                    : getConnectionStatus().status === 'updating'
+                    ? 'warning'
+                    : 'error'
+                }
+                size='small'
+                variant='outlined'
+                sx={{
+                  borderRadius: '16px',
+                  fontWeight: 500,
+                }}
               />
             )}
             {isFetching && <CircularProgress size={16} />}
           </Box>
         </Box>
 
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
           {/* Real-time controls */}
-          <IconButton 
+          <IconButton
             onClick={refresh}
-            size="small"
-            sx={{ bgcolor: 'primary.50', '&:hover': { bgcolor: 'primary.100' } }}
-            title="Actualizar manualmente"
-          >
-            <RefreshIcon />
-          </IconButton>
-          
-          <IconButton 
-            onClick={pausePolling}
-            size="small"
-            sx={{ bgcolor: 'warning.50', '&:hover': { bgcolor: 'warning.100' } }}
-            title="Pausar actualizaciones automáticas"
-          >
-            <PauseIcon />
-          </IconButton>
-          
-          <IconButton 
-            onClick={resumePolling}
-            size="small"
-            sx={{ bgcolor: 'success.50', '&:hover': { bgcolor: 'success.100' } }}
-            title="Reanudar actualizaciones automáticas"
-          >
-            <PlayArrowIcon />
+            size='small'
+            sx={{
+              bgcolor: '#f5f5f5',
+              '&:hover': { bgcolor: '#e0e0e0' },
+              width: 36,
+              height: 36,
+            }}
+            title='Actualizar manualmente'>
+            <RefreshIcon sx={{ fontSize: 18 }} />
           </IconButton>
 
-          <IconButton sx={{ bgcolor: 'grey.100', border: '1px solid', borderColor: 'grey.300' }}>
-            <PersonIcon />
+          <IconButton
+            onClick={pausePolling}
+            size='small'
+            sx={{
+              bgcolor: '#fff3e0',
+              '&:hover': { bgcolor: '#ffe0b2' },
+              width: 36,
+              height: 36,
+            }}
+            title='Pausar actualizaciones automáticas'>
+            <PauseIcon sx={{ fontSize: 18 }} />
+          </IconButton>
+
+          <IconButton
+            onClick={resumePolling}
+            size='small'
+            sx={{
+              bgcolor: '#e8f5e8',
+              '&:hover': { bgcolor: '#c8e6c9' },
+              width: 36,
+              height: 36,
+            }}
+            title='Reanudar actualizaciones automáticas'>
+            <PlayArrowIcon sx={{ fontSize: 18 }} />
+          </IconButton>
+
+          <IconButton
+            sx={{
+              bgcolor: '#f5f5f5',
+              border: '1px solid #e0e0e0',
+              width: 36,
+              height: 36,
+              '&:hover': {
+                bgcolor: '#e0e0e0',
+              },
+            }}>
+            <PersonIcon sx={{ fontSize: 18 }} />
           </IconButton>
         </Box>
       </Box>
 
       <Box sx={{ flex: 1, overflow: 'auto' }}>
-        <Table>
+        <Table sx={{ borderCollapse: 'separate', borderSpacing: 0 }}>
           <TableHead>
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id} sx={{ bgcolor: 'grey.50' }}>
+              <TableRow key={headerGroup.id} sx={{ bgcolor: '#fafafa' }}>
                 {headerGroup.headers.map((header) => (
                   <TableCell
                     key={header.id}
                     sx={{
-                      fontWeight: 'semibold',
-                      color: 'text.secondary',
-                      borderBottom: '1px solid',
-                      borderColor: 'grey.200',
-                      py: 2,
+                      fontWeight: 600,
+                      color: '#666',
+                      borderBottom: '1px solid #e0e0e0',
+                      // py: 2.5,
+                      px: 3,
+                      fontSize: '0.875rem',
+                      letterSpacing: '0.5px',
                     }}>
                     {flexRender(header.column.columnDef.header, header.getContext())}
                   </TableCell>
@@ -210,35 +254,41 @@ function TableContent({
             ))}
           </TableHead>
           <TableBody>
-            {table.getRowModel().rows.map((row) => (
-              <TableRow
-                key={row.id}
-                onClick={() => handleRowClick(row.original)}
-                sx={{
-                  cursor: 'pointer',
-                  minHeight: 60,
-                  mb: 1,
-                  '&:hover': {
-                    bgcolor: 'grey.50',
-                  },
-                  ...(selectedRowId === row.id && {
-                    bgcolor: 'primary.50',
-                    borderLeft: '4px solid',
-                    borderColor: 'primary.main',
-                  }),
-                }}>
-                {row.getVisibleCells().map((cell) => (
-                  <TableCell
-                    key={cell.id}
-                    sx={{
-                      py: 2,
-                      borderBottom: '1px solid',
-                      borderColor: 'grey.100',
-                    }}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
-                ))}
-              </TableRow>
+            {table.getRowModel().rows.map((row, index) => (
+              <>
+                <TableRow
+                  key={row.id}
+                  onClick={() => handleRowClick(row.original)}
+                  sx={{
+                    cursor: 'pointer',
+                    minHeight: 72,
+                    '&:hover': {
+                      bgcolor: '#f8f9fa',
+                    },
+                    ...(selectedRowId === row.original._id && {
+                      bgcolor: '#e3f2fd',
+                    }),
+                    '&:not(:last-child)': {
+                      borderBottom: '1px solid #f0f0f0',
+                    },
+                  }}>
+                  {row.getVisibleCells().map((cell, cellIndex) => (
+                    <TableCell
+                      key={cell.id}
+                      sx={{
+                        py: 3,
+                        px: 3,
+                        verticalAlign: 'middle',
+                        borderBottom: '1px solid grey.100',
+                        ...(selectedRowId === row.original._id && cellIndex === 0 && {
+                          borderLeft: '4px solid #1976d2',
+                        }),
+                      }}>
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              </>
             ))}
           </TableBody>
         </Table>
@@ -249,26 +299,40 @@ function TableContent({
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          mt: 3,
-          pt: 2,
-          borderTop: '1px solid',
-          borderColor: 'grey.200',
+          mt: 4,
+          pt: 3,
+          borderTop: '1px solid #e0e0e0',
         }}>
         <Button
           variant='outlined'
           startIcon={<NavigateBeforeIcon />}
           onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}>
+          disabled={!table.getCanPreviousPage()}
+          sx={{
+            borderRadius: '6px',
+            textTransform: 'none',
+            fontWeight: 500,
+            borderColor: '#e0e0e0',
+            color: '#666',
+            '&:hover': {
+              borderColor: '#bdbdbd',
+              backgroundColor: '#f5f5f5',
+            },
+            '&.Mui-disabled': {
+              borderColor: '#f0f0f0',
+              color: '#ccc',
+            },
+          }}>
           Atrás
         </Button>
 
-        <Typography variant='body2' color='text.secondary'>
+        <Typography variant='body2' sx={{ color: '#666', fontWeight: 500 }}>
           Página{' '}
-          <Typography component='span' variant='body2' fontWeight='semibold' color='text.primary'>
+          <Typography component='span' variant='body2' sx={{ fontWeight: 600, color: '#333' }}>
             {table.getState().pagination.pageIndex + 1}
           </Typography>{' '}
           de{' '}
-          <Typography component='span' variant='body2' fontWeight='semibold' color='text.primary'>
+          <Typography component='span' variant='body2' sx={{ fontWeight: 600, color: '#333' }}>
             {table.getPageCount()}
           </Typography>
         </Typography>
@@ -277,7 +341,22 @@ function TableContent({
           variant='outlined'
           endIcon={<NavigateNextIcon />}
           onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}>
+          disabled={!table.getCanNextPage()}
+          sx={{
+            borderRadius: '6px',
+            textTransform: 'none',
+            fontWeight: 500,
+            borderColor: '#e0e0e0',
+            color: '#666',
+            '&:hover': {
+              borderColor: '#bdbdbd',
+              backgroundColor: '#f5f5f5',
+            },
+            '&.Mui-disabled': {
+              borderColor: '#f0f0f0',
+              color: '#ccc',
+            },
+          }}>
           Siguiente
         </Button>
       </Box>
@@ -286,30 +365,30 @@ function TableContent({
 }
 
 function TablePageContent() {
-  const { 
-    data, 
-    isLoading, 
-    refresh, 
-    pausePolling, 
+  const {
+    data,
+    isLoading,
+    refresh,
+    pausePolling,
     resumePolling,
     isFetching,
     getConnectionStatus,
     updateMode,
     switchToPolling,
     switchToWebSocket,
-    switchToHybrid
+    switchToHybrid,
   } = useRealTimeData({
     mode: 'polling',
     pollingInterval: 3000, // Update every 3 seconds
   });
   const [selectedRowData, setSelectedRowData] = React.useState<TripData | null>(null);
-  
+
   // Use the enhanced useTravelDetails hook with real-time capabilities
-  const { 
-    getTravelDetails, 
+  const {
+    getTravelDetails,
     refreshDetails,
     clearDetails,
-    isLoading: detailsLoading, 
+    isLoading: detailsLoading,
     travelDetails,
     selectedTripId,
     lastUpdate,
@@ -322,7 +401,6 @@ function TablePageContent() {
 
   // Call endpoint when selectedRowData is not null
   useEffect(() => {
-
     if (selectedRowData?._id) {
       const fetchDetails = async () => {
         try {

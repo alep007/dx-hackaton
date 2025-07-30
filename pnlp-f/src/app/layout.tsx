@@ -2,7 +2,14 @@
 import React from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
+import { Inter } from 'next/font/google';
 import "./globals.css";
+
+// Load Inter font
+const inter = Inter({ 
+  subsets: ['latin'],
+  display: 'swap',
+});
 
 // Create MUI theme
 const theme = createTheme({
@@ -18,7 +25,7 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: 'Roboto, Arial, sans-serif',
+    fontFamily: inter.style.fontFamily,
   },
 });
 
@@ -48,7 +55,7 @@ function BaseLayout({ children }: { children: React.ReactNode }) {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="es">
+    <html lang="es" className={inter.className}>
       <head>
         <title>FreightHub</title>
         <meta name="description" content="FreightHub Table Demo" />

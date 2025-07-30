@@ -9,8 +9,6 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   // Enable CORS
-  console.log('sup');
-  console.log(process.env.FRONTEND_URL, process.env.MONGODB_URI);
   const frontendUrl =
     process.env.FRONTEND_URL || 'https://dx-hackaton.vercel.app';
   app.enableCors({

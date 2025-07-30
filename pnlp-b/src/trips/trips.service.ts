@@ -79,7 +79,7 @@ export class TripsService implements OnModuleInit, OnModuleDestroy {
   // Get all trip quotes
   async findAll(): Promise<TripQuote[]> {
     try {
-      const results = await this.tripQuoteModel.find().exec();
+      const results = await this.tripQuoteModel.find().sort({ createdAt: -1 }).exec();
       
       // Add quote prices data to each trip
       const enrichedResults = await Promise.all(

@@ -21,7 +21,7 @@ export const WhatsAppLink = ({
       <Stack direction='row' gap={0.5} color={green[600]}>
         <WhatsApp fontSize='small' />
         {!onlyIcon && (
-          <Typography fontWeight={500} fontSize={14} variant='caption'>{`${phone}`}</Typography>
+          <Typography fontWeight={500} fontSize={14} variant='caption'>{`+ ${phone}`}</Typography>
         )}
       </Stack>
     </Link>
