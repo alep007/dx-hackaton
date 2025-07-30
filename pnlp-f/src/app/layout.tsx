@@ -52,16 +52,17 @@ function BaseLayout({ children }: { children: React.ReactNode }) {
           alignItems: 'center',
         }}>
         <span style={{ fontSize: '24px', fontWeight: 'bold' }}>
-          Freight
-          <span style={{ 
-            backgroundColor: '#388E3C', 
-            color: 'white', 
-            padding: '2px 6px', 
-            borderRadius: '4px',
-            marginLeft: '2px'
-          }}>
-            Hub
+          <span
+            style={{
+              backgroundColor: '#388E3C',
+              color: 'white',
+              padding: '2px 6px',
+              borderRadius: '4px',
+              marginLeft: '2px',
+            }}>
+            F
           </span>
+          reightHub
         </span>
       </header>
       <main
