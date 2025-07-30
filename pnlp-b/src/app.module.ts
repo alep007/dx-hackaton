@@ -7,7 +7,7 @@ import { QuotePricesModule } from './quote-prices/quote-prices.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb+srv://DBdelta-Develop:nXsHa0k7lkrravT3@deltaxdb-develop.airpm.mongodb.net/deltafmsQA', {
+    MongooseModule.forRoot(process.env.MONGODB_URI || 'mongodb://localhost:27017/travel-app', {
       // You can add MongoDB connection options here
     }),
     TripsModule,
