@@ -45,7 +45,10 @@ interface TravelDetailsProps {
   relevantChangesCount?: number;
 }
 
-const Transition = forwardRef(function Transition(props: React.ComponentProps<typeof Slide>, ref: React.Ref<unknown>) {
+const Transition = forwardRef(function Transition(
+  props: React.ComponentProps<typeof Slide>,
+  ref: React.Ref<unknown>
+) {
   return <Slide direction='left' ref={ref} {...props} />;
 });
 
@@ -99,9 +102,7 @@ export function TravelDetailsComponent({
   };
 
   const getBestOffer = useMemo(() => {
-    return data && data.length > 0
-      ? Math.min(...data.map((item) => Number(item.amount) || 0))
-      : 0;
+    return data && data.length > 0 ? Math.min(...data.map((item) => Number(item.amount) || 0)) : 0;
   }, [data]);
 
   return (
@@ -176,16 +177,6 @@ export function TravelDetailsComponent({
           </Alert>
         )}
 
-        {/* Development test utilities
-        {process.env.NODE_ENV === 'development' && (
-          <RealTimeTestUtils 
-            tripId={rowData?._id} 
-            onTestEvent={() => {
-              console.log('Test event triggered');
-            }}
-          />
-        )} */}
-
         {/* Trip Information */}
         <Box sx={{ mb: 3 }}>
           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
@@ -202,19 +193,21 @@ export function TravelDetailsComponent({
                   justifyContent: 'center',
                   mr: 1.5,
                 }}>
-                <CalendarIcon  fontSize='small' />
+                <CalendarIcon fontSize='small' />
               </Box>
               <Box>
                 <Typography variant='caption' color='text.secondary'>
                   Fecha de carga
                 </Typography>
                 <Typography variant='body1' fontWeight='medium'>
-                  {rowData?.createdAt ? new Date(rowData.createdAt).toLocaleDateString('es-ES', {
-                    day: '2-digit',
-                    month: '2-digit',
-                    year: 'numeric',
-                    timeZone: 'America/La_Paz',
-                  }) : 'N/A'}
+                  {rowData?.createdAt
+                    ? new Date(rowData.createdAt).toLocaleDateString('es-ES', {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric',
+                        timeZone: 'America/La_Paz',
+                      })
+                    : 'N/A'}
                 </Typography>
               </Box>
             </Box>
@@ -232,19 +225,21 @@ export function TravelDetailsComponent({
                   justifyContent: 'center',
                   mr: 1.5,
                 }}>
-                <CalendarIcon  fontSize='small' />
+                <CalendarIcon fontSize='small' />
               </Box>
               <Box>
                 <Typography variant='caption' color='text.secondary'>
                   Fecha de entrega
                 </Typography>
                 <Typography variant='body1' fontWeight='medium'>
-                  {rowData?.deliveryDate ? new Date(rowData.deliveryDate).toLocaleDateString('es-ES', {
-                    day: '2-digit',
-                    month: '2-digit',
-                    year: 'numeric',
-                    timeZone: 'America/La_Paz',
-                  }) : 'N/A'}
+                  {rowData?.deliveryDate
+                    ? new Date(rowData.deliveryDate).toLocaleDateString('es-ES', {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric',
+                        timeZone: 'America/La_Paz',
+                      })
+                    : 'N/A'}
                 </Typography>
               </Box>
             </Box>
@@ -262,7 +257,7 @@ export function TravelDetailsComponent({
                   justifyContent: 'center',
                   mr: 1.5,
                 }}>
-                <LocationIcon  fontSize='small' />
+                <LocationIcon fontSize='small' />
               </Box>
               <Box>
                 <Typography variant='caption' color='text.secondary'>
@@ -287,7 +282,7 @@ export function TravelDetailsComponent({
                   justifyContent: 'center',
                   mr: 1.5,
                 }}>
-                <LocationIcon  fontSize='small' />
+                <LocationIcon fontSize='small' />
               </Box>
               <Box>
                 <Typography variant='caption' color='text.secondary'>
@@ -312,7 +307,7 @@ export function TravelDetailsComponent({
                   justifyContent: 'center',
                   mr: 1.5,
                 }}>
-                <ShippingIcon  fontSize='small' />
+                <ShippingIcon fontSize='small' />
               </Box>
               <Box>
                 <Typography variant='caption' color='text.secondary'>
@@ -336,7 +331,7 @@ export function TravelDetailsComponent({
                   justifyContent: 'center',
                   mr: 1.5,
                 }}>
-                <ShippingIcon  fontSize='small' />
+                <ShippingIcon fontSize='small' />
               </Box>
               <Box>
                 <Typography variant='caption' color='text.secondary'>

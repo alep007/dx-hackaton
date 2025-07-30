@@ -322,13 +322,11 @@ function TablePageContent() {
 
   // Call endpoint when selectedRowData is not null
   useEffect(() => {
-    console.log(selectedRowData?._id);
 
     if (selectedRowData?._id) {
       const fetchDetails = async () => {
         try {
           const details = await getTravelDetails(selectedRowData._id);
-          console.log('Travel details fetched:', details);
         } catch (error) {
           console.error('Error fetching travel details:', error);
         }
